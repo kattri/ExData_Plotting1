@@ -32,8 +32,15 @@
      ## Add an additional Date Time Field
      library(lubridate)
      testData$datetime<-as.POSIXct(paste(testData$Date,testData$Time))
+          ylower=min(testData$Sub_metering_1,
+           testData$Sub_metering_2,
+           testData$Sub_metering_3)
+          yupper =max(testData$Sub_metering_1,
+            testData$Sub_metering_2,
+            testData$Sub_metering_3)
      png(file = "./plot4.png")
      par(mfrow = c(2, 2), mar = c(4, 4, 2, 1), oma = c(0, 0, 2, 0))
+
      with(testData, {
           plot(datetime,Global_active_power, xlab=" ",
                ylab="Global Active Power(kilowatts)",
@@ -42,6 +49,8 @@
                ylab="Voltage",
                type ="l")
           plot(datetime,Sub_metering_1,col="magenta",
+               ylim =c(as.numeric(ylower),
+                       1.05*as.numeric(yupper)),
                ylab="Energy sub Metering",xlab="",type='l')
                points(datetime,Sub_metering_2,type='l',col='red')
                points(datetime,Sub_metering_3,type='l',col='blue')

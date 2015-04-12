@@ -34,8 +34,16 @@
      testData$datetime<-as.POSIXct(paste(testData$Date,testData$Time))
      
      png(file = "./plot3.png")
-     with(testData,plot(datetime,Sub_metering_1,col="magenta",
-                        ylab="Energy sub Metering",xlab="",type='l'))
+     ylower=min(testData$Sub_metering_1,
+                testData$Sub_metering_2,
+                testData$Sub_metering_3)
+     yupper =max(testData$Sub_metering_1,
+                 testData$Sub_metering_2,
+                 testData$Sub_metering_3)
+     with(testData,plot(datetime,Sub_metering_1,ylim =c(as.numeric(ylower),
+                                                       1.1*as.numeric(yupper)),
+                        col="magenta",ylab="Energy sub Metering",
+                        xlab="",type='l'))
      with(testData,points(datetime,Sub_metering_2,type='l',col='red'))
      with(testData,points(datetime,Sub_metering_3,type='l',col='blue'))
      legend("topright", lty=c("solid","solid","solid"), 
